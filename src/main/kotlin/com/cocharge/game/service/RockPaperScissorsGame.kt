@@ -20,6 +20,12 @@ import com.cocharge.game.model.Result.*
 
 class RockPaperScissorsGame : GameEvaluator {
 
+    private val winningConditions: Map<Choice, Choice> = mapOf(
+        ROCK to SCISSORS,
+        PAPER to ROCK,
+        SCISSORS to PAPER
+    )
+
     /**
      * Evaluates the choices of two players in a round of Rock-Paper-Scissors game.
      *
@@ -35,9 +41,7 @@ class RockPaperScissorsGame : GameEvaluator {
     override fun evaluate(playerAChoice: Choice, playerBChoice: Choice): Result {
         return when {
             playerAChoice == playerBChoice -> DRAW
-            (playerAChoice == ROCK && playerBChoice == SCISSORS) ||
-                    (playerAChoice == PAPER && playerBChoice == ROCK) ||
-                    (playerAChoice == SCISSORS && playerBChoice == PAPER) -> WIN
+            playerBChoice == winningConditions[playerAChoice]!! -> WIN
             else -> LOSE
         }
 

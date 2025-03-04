@@ -1,8 +1,5 @@
 
-import com.cocharge.game.model.Choice
 import com.cocharge.game.model.Choice.ROCK
-import com.cocharge.game.model.Result
-import com.cocharge.game.service.Game
 import com.cocharge.game.service.GameManager
 import com.cocharge.game.service.RockPaperScissorsGame
 
