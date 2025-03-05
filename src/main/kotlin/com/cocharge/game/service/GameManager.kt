@@ -6,13 +6,14 @@ import com.cocharge.game.model.Result
 
 class GameManager(private val game: GameEvaluator) {
 
-    fun playRounds(rounds: Int, playerAChoice: Choice ): GameResult {
+    fun playRounds(rounds: Int): GameResult {
         var playerAWins = 0
         var playerBWins = 0
         var draws = 0
 
         repeat(rounds) {
             val playerBChoice = Choice.getRandom()
+            val playerAChoice = Choice.getRandom()
             val result = game.evaluate(playerAChoice, playerBChoice)
             when (result) {
                 Result.WIN -> playerAWins++

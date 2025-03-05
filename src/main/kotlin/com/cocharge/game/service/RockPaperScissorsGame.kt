@@ -20,10 +20,12 @@ import com.cocharge.game.model.Result.*
 
 class RockPaperScissorsGame : GameEvaluator {
 
-    private val winningConditions: Map<Choice, Choice> = mapOf(
-        ROCK to SCISSORS,
-        PAPER to ROCK,
-        SCISSORS to PAPER
+    private val winningConditions: Map<Choice, HashSet<Choice>> = mapOf(
+        ROCK to hashSetOf(SCISSORS,LIZARD) ,
+        PAPER to hashSetOf(ROCK,SPOCK) ,
+        SCISSORS to hashSetOf(PAPER,LIZARD),
+        LIZARD to hashSetOf(PAPER,SPOCK),
+        SPOCK to hashSetOf(SCISSORS,ROCK)
     )
 
     /**
@@ -41,7 +43,7 @@ class RockPaperScissorsGame : GameEvaluator {
     override fun evaluate(playerAChoice: Choice, playerBChoice: Choice): Result {
         return when {
             playerAChoice == playerBChoice -> DRAW
-            playerBChoice == winningConditions[playerAChoice] -> WIN
+            winningConditions[playerAChoice]?.contains(playerBChoice) == true -> WIN
             else -> LOSE
         }
 

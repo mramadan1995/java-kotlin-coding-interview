@@ -4,7 +4,7 @@ package com.cocharge.game.model
  * Represents the possible choices in a Rock-Paper-Scissors game.
  */
 enum class Choice {
-    ROCK, PAPER, SCISSORS;
+    ROCK, PAPER, SCISSORS , SPOCK, LIZARD;
 
     companion object {
         /**
