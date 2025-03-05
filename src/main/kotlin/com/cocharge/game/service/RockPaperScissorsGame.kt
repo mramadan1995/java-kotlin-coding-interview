@@ -41,7 +41,7 @@ class RockPaperScissorsGame : GameEvaluator {
     override fun evaluate(playerAChoice: Choice, playerBChoice: Choice): Result {
         return when {
             playerAChoice == playerBChoice -> DRAW
-            playerBChoice == winningConditions[playerAChoice]!! -> WIN
+            playerBChoice == winningConditions[playerAChoice] -> WIN
             else -> LOSE
         }
 

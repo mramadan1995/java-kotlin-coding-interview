@@ -22,58 +22,45 @@ class GameManagerTest {
     }
 
     @Test
-    fun `playRounds when player B and player A win together should return GameResult of all values`() {
+    fun `test playRounds counts results correctly`() {
+        `when`(gameEvaluator.evaluate(any(), any())).thenReturn(Result.WIN)
+        val result = gameManager.playRounds(100, Choice.ROCK)
+        assertEquals(100, result.playerAWins)
+        assertEquals(0, result.playerBWins)
+        assertEquals(0, result.draws)
+    }
+
+    @Test
+    fun `test playRounds when all rounds are draws`() {
+        `when`(gameEvaluator.evaluate(any(), any())).thenReturn(Result.DRAW)
+        val result = gameManager.playRounds(50, Choice.PAPER)
+        assertEquals(0, result.playerAWins)
+        assertEquals(0, result.playerBWins)
+        assertEquals(50, result.draws)
+    }
+
+    @Test
+    fun `test playRounds when all rounds are losses`() {
+        `when`(gameEvaluator.evaluate(any(),any())).thenReturn(Result.LOSE)
+        val result = gameManager.playRounds(30, Choice.SCISSORS)
+        assertEquals(0, result.playerAWins)
+        assertEquals(30, result.playerBWins)
+        assertEquals(0, result.draws)
+    }
+
+    @Test
+    fun `test playRounds with randoms results`() {
         `when`(gameEvaluator.evaluate(any(), any()))
-            .thenReturn(Result.WIN)
-            .thenReturn(Result.LOSE)
-            .thenReturn(Result.DRAW)
-            .thenReturn(Result.WIN)
-            .thenReturn(Result.LOSE)
+            .thenReturn(Result.WIN, Result.LOSE, Result.DRAW, Result.WIN, Result.LOSE)
 
         val result = gameManager.playRounds(5, Choice.ROCK)
-
         assertEquals(2, result.playerAWins)
         assertEquals(2, result.playerBWins)
         assertEquals(1, result.draws)
     }
-
-    @Test
-    fun `playRounds when Player A wins all rounds should return GameResult of only playerAWins`() {
-        `when`(gameEvaluator.evaluate(any(), any())).thenReturn(Result.WIN)
-
-        val result = gameManager.playRounds(5, Choice.ROCK)
-
-        assertEquals(5, result.playerAWins)
-        assertEquals(0, result.playerBWins)
-        assertEquals(0, result.draws)
-    }
-
-    @Test
-    fun `playRounds when player B wins all rounds should return GameResult of only playerBWins`() {
-        `when`(gameEvaluator.evaluate(any(), any())).thenReturn(Result.LOSE)
-
-        val result = gameManager.playRounds(4, Choice.ROCK)
-
-        assertEquals(0, result.playerAWins)
-        assertEquals(4, result.playerBWins)
-        assertEquals(0, result.draws)
-    }
-
-    @Test
-    fun `playRounds when player B and player A draws all rounds should return GameResult of only draws`() {
-        `when`(gameEvaluator.evaluate(any(), any())).thenReturn(Result.DRAW)
-
-        val result = gameManager.playRounds(2, Choice.ROCK)
-
-        assertEquals(0, result.playerAWins)
-        assertEquals(0, result.playerBWins)
-        assertEquals(2, result.draws)
-    }
-
     @Test
     fun `playRounds when zero rounds should return all zeroes`() {
         val result = gameManager.playRounds(0, Choice.ROCK)
-
         assertEquals(0, result.playerAWins)
         assertEquals(0, result.playerBWins)
         assertEquals(0, result.draws)
